@@ -1,0 +1,70 @@
+h1,h2,h3,h4{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
+.profile .top-cont{
+    height: 50vh;
+
+}
+.profile .top-cont .images{
+    width: 100%;
+    height: 100%;
+}
+.cont2{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+}
+.ngo-info{
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 5px;
+    background-color: #F2F2F2;
+    padding: 5px;
+}
+.recentActivity{
+    width: 75%;
+    border-radius: 5px;
+    
+}
+.camp-des{
+    text-align: center;
+    font-size: 25px;
+}
+
+.donate input{
+width: 40%;
+}
+.donate{
+    background-color: #F2F2F2;
+    
+    padding: 7px;
+    border-radius: 10px;
+}
+
+.recent{
+    padding: 15px;
+    line-height: 2;
+    
+}
+.ngo-reqform{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.btn{
+    background-color: #181818;
+}
+
+@media  screen and (max-width:768px ){
+
+    .cont2{
+        flex-wrap: wrap;
+        justsify-content: center;
+    }
+    .ngo-info{
+        width:95%;
+    }
+}

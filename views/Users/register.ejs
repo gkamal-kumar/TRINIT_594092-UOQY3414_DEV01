@@ -1,0 +1,78 @@
+<%- include('../partials/head') %>
+
+    <body>
+        <%- include('../partials/navbar2') %>
+        <%- include('../partials/flash')  %>
+            <div class="container">
+                <div class="container mt-5 border-3">
+                    <div class="row">
+                        <div class="col-6 offset-3">
+                            <h1 class="mx-auto text-center">USER SIGNUP</h1>
+                        </div>
+                    </div>
+                    <form action="/users/register" method="post" class="validated-form" novalidate>
+                        <!-- Email input -->
+                        <div class="row">
+                            <div style="display:block;" class="form-outline mb-4 col-6 offset-3 mx-auto">
+                                <label class="form-label" for="Username">Enter Name</label>
+                                <input type="text" id="Username" name="User[name]" class="form-control"
+                                    placeholder="Enter username" required />
+                            </div>
+                        </div>
+                        <!-- Email input -->
+                        <div class="row">
+                            <div style="display:block;" class="form-outline mb-4 col-6 offset-3 mx-auto">
+                                <label class="form-label" for="Email">Email address</label>
+                                <input type="email" id="Email" name="User[email]" class="form-control"
+                                    placeholder="Enter email" required/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Password input -->
+                            <div style="display:block;" class="form-outline mb-4 col-6 offset-3 mx-auto">
+                                <label class="form-label" for="Password">Enter Password</label>
+                                <input type="password" id="Password" name="User[password]" class="form-control"
+                                    placeholder="Enter password" required />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div style="display:block;" class="form-outline mb-4 col-6 offset-3 mx-auto">
+                                <label class="form-label" for="address">Enter Address</label>
+                                <textarea id="address" name="User[address]" class="form-control"
+                                    placeholder="Enter address" required></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div style="display:block;" class="form-outline mb-4 col-6 offset-3 mx-auto">
+                                <label class="form-label" for="phoneNumber">Enter phoneNumber</label>
+                                <input type="String" id="phoneNumber" name="User[phoneNumber]" class="form-control"
+                                    placeholder="Enter phoneNumber" required/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div style="display:block;" class="form-outline mb-4 col-6 offset-3 mx-auto">
+                                <label class="form-label" for="description">About</label>
+                                <textarea id="description" name="User[description]" class="form-control"
+                                    placeholder="Enter description" required></textarea>
+                            </div>
+                        </div>
+                </div>
+                <!-- Submit button -->
+                <button type="submit" style="display:block;" class="btn btn-primary btn-block mb-4 mx-auto">Sign
+                    in</button>
+                </form>
+            </div>
+            </div>
+
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+                crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+                crossorigin="anonymous"></script>
+                
+            <script src="/js/validateforms.js"></script>
+
+    </body>
+    <%- include('../partials/footer') %>

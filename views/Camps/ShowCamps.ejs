@@ -1,0 +1,67 @@
+<%- include('../partials/head') %>
+<link rel="stylesheet" href="/css/showcamps.css">
+</head>
+     <body>
+          <%- include('../partials/navbar3') %>
+          <div class="row profile">
+               <div class="top-cont ">
+                    <img class="images" src="https://images.unsplash.com/photo-1595576281032-ac89e8a05c5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1888&q=80" alt="broo">                    
+               </div>
+
+          </div>
+               
+               
+               <div class="cont2 p-4">
+                    <div class="col-6 ngo-info" >
+                         <div>
+                              
+                              <h3>About our NGO</h3>
+                              <div class="camp-des">
+                                   <%= camp.description %>
+                              </div>
+                              
+                         </div>
+                         
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="form col-6 ngo-info">
+                         <form action="/camps/<%= camp.id  %>/post" class="" method="post">
+                              <p>Create a new Donation</p>
+                              <div class="form-group d-flex justify-content-center p-2">
+                                   <input  id="messagetitle" class="form-control" placeholder="Enter the Title" name="title" type="text" style="width: 75%;">
+                              </div>
+                              <div class="form-group p-2">
+                                   <textarea rows="10" cols="20" placeholder="Make your New Donation Camp" id="message" name="message" class="recentActivity"></textarea>
+                              </div>
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                                
+                         </form>
+                    </div>
+                    
+               </div>
+               <br>
+               <br>
+               <% if(camp.recentActivity.length>=1){ %>
+                    <h3 class="text-center">Recent Activity</h3>
+                   <% for(let ra of camp.recentActivity){ %>
+                        
+                        <div class="recent">
+                         
+                         
+                         <form class="donate" action="/posts/<%= ra._id  %>" method="GET">
+                              <h4><%= ra.title %></h4>
+                              <p><%= ra.message %></p>
+                              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia deleniti, ipsa adipisci unde repudiandae voluptatem quos? Sunt quibusdam inventore soluta repellat. Voluptate, vitae. Porro esse enim cumque debitis perspiciatis corrupti voluptatibus iure provident excepturi quisquam dolores non eos dolorum repellat ipsam similique, ex illo maxime nesciunt reiciendis. Voluptates, beatae consectetur?</p>
+                              <button  type="submit" class="btn btn-primary ">Donate</button>
+                                
+                           </form>
+                        </div>
+                        
+                   <% } %>
+               <% } %>
+
+     
+     </body>
+     <%- include('../partials/footer') %>

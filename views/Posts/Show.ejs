@@ -1,0 +1,29 @@
+<%- include('../partials/head') %>
+     </head>
+
+     <body>
+          <%- include('../partials/navbar3') %>
+               <%- include('../partials/flash') %>
+                    <div>
+                         <h1>
+                              <%= post.message %>
+                         </h1>
+                         <h3>Posted By: <%= post.sender.name %></h3>
+                         <a href="/camps/<%= post.sender._id  %>">Sender Profile</a>
+                         <% if(post.user.length>0) {%>
+                              <h3>Recent Donations</h3>
+                              <% for(let i=0;i<post.user.length;i++){ %>
+                                   <div>
+                                   <%= post.user[i].username %> given <%= post.money[i] %>
+                                  </div>
+                                   <a href="/users/<%= post.user[i]._id  %>">Profile</a>
+                              <% } %>
+                         <% }%>
+                         <% if(post.user.length==0){ %>
+                              <h4>No Donations </h4>
+                         <% } %>
+                    </div>
+
+
+     </body>
+     <%- include('../partials/footer')%></br>

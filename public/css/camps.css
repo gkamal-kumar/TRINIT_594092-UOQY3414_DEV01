@@ -1,0 +1,18 @@
+.camps{
+    padding: 10px;
+
+}
+
+.camp{
+    background-color:rgb(214, 213, 211);
+    margin: 5px;
+}
+.camp-name{
+    font-size: xx-large;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+.camp-par{
+    border-radius: 20px;
+
+}

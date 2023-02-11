@@ -1,0 +1,30 @@
+<%- include('../partials/head') %>
+<link rel="stylesheet" href="camps.css">
+</head>
+    <body>
+        <%- include('../partials/navbar4') %>
+        
+        <%- include('../partials/flash') %>
+            <div class="container">
+                <h1 class="text-center">All Camps</h1>
+                <div>
+                    <div class="list-group camps"></ul>
+                    <% for(let camp of allcamps){ %>
+                    <div class="camp-par">
+                        <div class="list-group-item camp">
+                            
+                            <div class="camp-name"><%= camp.name %></div>
+                            <div class="camp-des"><%= camp.description %></div>
+                            
+                            <a href="/camps/<%=camp.id %>">Camp Details</a>
+                        </div>
+                    </div>
+                        <% } %>
+                </div>
+                </div>
+                <br>
+            </div>
+           
+
+    </body>
+    <%- include('../partials/footer') %>
