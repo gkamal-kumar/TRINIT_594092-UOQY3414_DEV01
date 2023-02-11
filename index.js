@@ -78,9 +78,6 @@ app.use((req, res, next) => {
 })
 
 
-app.get('/flush', async (req, res) => {
-    await Camps.deleteMany({});
-})
 
 app.get('/login', (req, res) => {
     res.render('./Users/login');
@@ -104,16 +101,16 @@ app.get('/', (req, res) => {
 
 app.post('/:id/donate', async(req, res) => {
     const { id } = req.params;
+    console.log(req.body);
     let { money } = req.body;
     const post = await Posts.findById(id);
     if (req.session && req.session.passport) {
         const user = await User.find({ username: req.session.passport.user });  
-        console.log(user);
         post.user.push(user[0]);
         post.money.push(money);
-        console.log(post);
         await post.save();
     }
+    console.log(post);
     res.redirect(`/posts/${post._id}`);
 })
 

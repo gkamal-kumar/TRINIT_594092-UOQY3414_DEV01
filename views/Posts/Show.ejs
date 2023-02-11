@@ -25,5 +25,22 @@
                     </div>
 
 
+                    <form action="/<%= post._id  %>/donate" method="POST" novalidate class="validated-form">
+                    <div class="mb-3">
+                         <label class="form-label" for="price">Money</label>
+                         <div class="input-group">
+                             <span class="input-group-text" id="price-label">$</span>
+                             <input type="text" class="form-control" id="money" placeholder="0.00" aria-label="money"
+                                 aria-describedby="money-label" name="money" required>
+                         </div>
+                         <div class="valid-feedback">
+                             Looks good!
+                         </div>
+                     </div>
+                     <div class="mb-3">
+                         <button class="btn btn-success">Donate</button>
+                     </div>
+
+
      </body>
      <%- include('../partials/footer')%></br>
