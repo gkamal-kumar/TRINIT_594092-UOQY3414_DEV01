@@ -12,7 +12,7 @@ const methodOverride = require('method-override');
 const camproutes = require('./routers/camps');
 const userroutes = require('./routers/users');
 const bcrypt = require('bcrypt');
-
+const Msg = require('./models/message');
 
 
 
@@ -87,7 +87,6 @@ app.get('/logout', (req, res) => {
     req.session.flash = { 'success': 'Goodbye!!' }; 
     console.log(req.session);
     delete (req.session).passport;
-
     res.redirect('/');
 })
 
@@ -98,19 +97,28 @@ app.get('/', (req, res) => {
     res.render('./homepage')
 })
 
+app.get('/newposts',async (req, res) => {
+    const Posts = await Post.find({}).populate("user").populate("sender");
+    console.log(Posts);
+    res.render('./Posts/RecentPosts.ejs',{Posts});
+})
+
+
 
 app.post('/:id/donate', async(req, res) => {
     const { id } = req.params;
-    console.log(req.body);
     let { money } = req.body;
+    if (!money) {
+        req.session.flash = { 'error': "Please Enter Valid money" };
+        return  res.redirect(`/posts/${id}`)
+    }
     const post = await Posts.findById(id);
     if (req.session && req.session.passport) {
-        const user = await User.find({ username: req.session.passport.user });  
-        post.user.push(user[0]);
+        const users = await User.find({ username: req.session.passport.user }); 
+        post.user.push(users[0]);
         post.money.push(money);
         await post.save();
     }
-    console.log(post);
     res.redirect(`/posts/${post._id}`);
 })
 
@@ -120,13 +128,31 @@ app.post('/:id/donate', async(req, res) => {
 app.get('/posts/:id',async(req, res) => {
     let { id } = req.params;
     const post = await Posts.findById(id).populate("user").populate("sender");
-    console.log(post);
-    res.render('./Posts/Show', { post });
+    let user = null;
+    if(req.session.passport && req.session.passport.user){
+        user = req.session.passport.user;
+    }
+    res.render('./Posts/Show', { post ,user});
 })
 
 
 
+app.get('/message/:id', isLoggedin, catchAsync(async (req, res) => {
+    let { id } = req.params;
+    let { message } = req.body;
+    const usname = req.session.name.name | req.session.passport.user;
+    if (usname == req.session.name.name) {
+        const camp = await Camps.find({ name: usname });
+        const user = await User.findById(id);
+        const Msg = new Msg();
+        Msg.message = message;
+        Msg.senderid= camp;
+        Msg.receiverid= user;
+        await Msg.save(); 
+        return res.redirect(`/users/${id}`);
+    } 
 
+}));
 
 
 

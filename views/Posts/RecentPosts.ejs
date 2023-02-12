@@ -1,0 +1,42 @@
+<%- include('../partials/head') %>
+<link rel="stylesheet" href="camps.css">
+</head>
+    <body>
+        <%- include('../partials/navbar4') %>
+        
+        <%- include('../partials/flash') %>
+            <div class="container">
+                <% if(Posts.length) {%>
+                <h1 class="text-center">All Recent Camps</h1>
+                <div>
+                    <div class="list-group camps " style="width:auto"></ul>
+                    <% for(let i=Posts.length-1;i>=0;i--){ %>
+                    <div class="card d-flex justify-content-center m-3" style="width: auto;">
+                        <div class="card-body ">
+                          <h5 class="card-title"><%= Posts[i].title %></h5>
+                          <p class="card-text"><%=Posts[i].message %></p>
+                          <p class="card-text">Posted By <%=Posts[i].sender.name %></p>
+                          <a href="/camps/<%= Posts[i].sender._id  %>" class="btn btn-primary">Organization</a>
+                          <br>
+                          <br>
+                          <form action="/Posts/<%= Posts[i]._id %>" method="get"> 
+                            <button type="submit" class="btn btn-primary"> Donate</button>
+                        </form>
+                        </div>
+                      </div>
+                     <% } %>
+                </div>
+                <% } %>
+            </div>
+            <% if(!Posts.length) {%>
+                <h1 class="text-center">No Recent Camps Available</h1>
+    
+            <% } %>
+
+            
+
+            </div>
+           
+
+    </body>
+    <%- include('../partials/footer') %>

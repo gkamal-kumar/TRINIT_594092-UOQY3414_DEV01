@@ -5,41 +5,68 @@
           <%- include('../partials/navbar3') %>
                <%- include('../partials/flash') %>
                     <div>
-                         <h1>
-                              <%= post.message %>
+                         <h1 class="text-center p-3">
+                              <%= post.title %>
                          </h1>
-                         <h3>Posted By: <%= post.sender.name %></h3>
-                         <a href="/camps/<%= post.sender._id  %>">Sender Profile</a>
-                         <% if(post.user.length>0) {%>
-                              <h3>Recent Donations</h3>
+                         <div class="text-center m-2" >
+                              <a href="/camps/<%= post.sender._id  %>" class="btn btn-primary ">By: <%= post.sender.name %>
+                              </a>
+                         </div>
+                         
+                        <% if(user){ %>
+                         <form action="/<%= post._id  %>/donate" method="POST" class="d-flex flex-column justify-content-center" novalidate class="validated-form">
+                              <div class="mb-3">
+
+                                   <div class="input-group d-flex flex-row justify-content-center">
+                                        <div class="form-label fw-light m-2" for="money" style="height: 100%;">Amount : </div>
+                                        <span class="input-group-text" id="price-label">$</span>
+                                        <div>
+                                             <input type="text" class="form-control" id="money" style="width: 50%;" placeholder="0.00"
+                                             aria-label="money" aria-describedby="money-label" name="money" required>
+                                             <div class="valid-feedback">
+                                                  Looks good!
+                                             </div>
+                                             <div class="invalid-feedback">
+                                                  Please Enter valid Number.
+                                             </div>
+                                        </div>
+                                        
+                                   </div>
+                              </div>
+                              <div class="mb-3 text-center">
+                                   <button class="btn btn-success " >Donate</button>
+                              </div>
+                              <script src="/js/validateforms.js"></script>
+                    
+                    </form>
+                  <% } %>
+
+                   
+                    <% if(post.user.length>0) {%>
+                         <h3 class="text-center p-2">Recent Donations</h3>
+                         <div class="d-flex flex-row flex-wrap justify-content-center">
                               <% for(let i=0;i<post.user.length;i++){ %>
-                                   <div>
-                                   <%= post.user[i].username %> given <%= post.money[i] %>
-                                  </div>
-                                   <a href="/users/<%= post.user[i]._id  %>">Profile</a>
-                              <% } %>
+
+                                   <div class="card m-2" style="width: 18rem;">
+                                        <div class="card-body text-center m-2 p-2">
+                                             <h5 class="card-title">
+                                                  <%= post.user[i].username %>
+                                             </h5>
+                                             <p class="card-text"> donated <%= post.money[i] %>
+                                             </p>
+                                             <a href="/users/<%= post.user[i]._id  %>"
+                                                  class="btn btn-primary">Profile</a>
+                                        </div>
+                                   </div>
+                                   <% } %>
+                         </div>
+
                          <% }%>
-                         <% if(post.user.length==0){ %>
-                              <h4>No Donations </h4>
-                         <% } %>
-                    </div>
+                              <% if(post.user.length==0){ %>
+                                   <h4 class="text-center">No Donations </h4>
+                              <% } %>
 
 
-                    <form action="/<%= post._id  %>/donate" method="POST" novalidate class="validated-form">
-                    <div class="mb-3">
-                         <label class="form-label" for="price">Money</label>
-                         <div class="input-group">
-                             <span class="input-group-text" id="price-label">$</span>
-                             <input type="text" class="form-control" id="money" placeholder="0.00" aria-label="money"
-                                 aria-describedby="money-label" name="money" required>
-                         </div>
-                         <div class="valid-feedback">
-                             Looks good!
-                         </div>
-                     </div>
-                     <div class="mb-3">
-                         <button class="btn btn-success">Donate</button>
-                     </div>
 
 
      </body>

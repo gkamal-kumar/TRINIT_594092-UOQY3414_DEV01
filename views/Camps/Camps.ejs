@@ -6,24 +6,14 @@
         
         <%- include('../partials/flash') %>
             <div class="container">
-                <h1 class="text-center">All Camps</h1>
                 <div>
                     <div class="list-group camps " style="width:auto"></ul>
                     <% for(let camp of allcamps){ %>
-                    <!-- <div class="camp-par">
-                        <div class="list-group-item camp bg-primary">
-                            
-                            <div class="camp-name"><%= camp.name %></div>
-                            <div class="camp-des"><%= camp.description %></div>
-                            
-                            <a href="/camps/<%=camp.id %>">Camp Details</a>
-                        </div>
-                    </div> -->
-                    <div class="card d-flex justify-content-center" style="width: auto;">
+                    <div class="card d-flex justify-content-center  m-3" style="width: auto;">
                         <div class="card-body ">
                           <h5 class="card-title"><%= camp.name %></h5>
                           <p class="card-text"><%= camp.description %></p>
-                          <a href="/camps/<%=camp.id %>" class="btn btn-primary">Camp Details</a>
+                          <a href="/camps/<%=camp.id %>" class="btn btn-primary">Organisation Details</a>
                         </div>
                       </div>
                         <% } %>

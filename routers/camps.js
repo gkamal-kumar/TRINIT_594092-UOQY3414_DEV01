@@ -16,13 +16,14 @@ const validateCamps = (req, res, next) => {
     const { error } = campsSchema.validate(req.body);
     if (error) {
         const msg = error.details.map(el => el.message).join(',');
+        req.session.error = { 'error': msg};
         throw new ExpressError(msg, 400);
     } else {
         next();
     }
 }
 
-router.get('/',async (req, res) => {
+router.get('/',isLoggedin,async (req, res) => {
     const allcamps = await Camps.find({});
     res.render('./Camps/Camps', { allcamps });
 })
@@ -44,6 +45,7 @@ router.post('/login', async (req, res) => {
         const validPassword = bcrypt.compare(password, camp.password);
         if (validPassword) {
             req.session.flash = { 'success': 'Welcome!' };
+            req.session.name = { 'name': camp.name };
             return res.redirect(`/camps/${camp.id}`);
         } else {
             req.session.flash = { 'error': 'username or password is incorrect' };
@@ -66,28 +68,32 @@ router.post('/', validateCamps, catchAsync(async (req, res) => {
     res.redirect(`/camps/${ngo._id}`);
 }))
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', isLoggedin,  async (req, res) => {
     let { id } = req.params;
+    let author=null;
+    if (req.session && req.session.passport) {
+        author = req.session.passport.user;
+    }
     const camp = await Camps.findById(id).populate("recentActivity");
-    res.render('./Camps/ShowCamps', { camp, msg: req.flash });
+    res.render('./Camps/ShowCamps', { camp, msg: req.flash ,author});
 })
 
 
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isLoggedin,async (req, res) => {
     const { id } = req.params;
     await Camps.findByIdAndDelete(id);
     res.redirect('/camps')
 })
 
 
-router.post('/:id/post', async (req, res) => {
+router.post('/:id/post', isLoggedin, async (req, res) => {
     const { id } = req.params;
     const camp = await Camps.findById(id);
     const { message,title } = req.body;
     const newpost = new Post();
     newpost.message = message;
-    newpost.title = message;
+    newpost.title = title;
     newpost.sender = camp;
     camp.recentActivity.push(newpost);
     await camp.save();
@@ -95,16 +101,20 @@ router.post('/:id/post', async (req, res) => {
     res.redirect(`/camps/${camp._id}`);
 })
 
-router.post('/:id/donate', async(req, res) => {
+router.post('/:id/donate',isLoggedin, async(req, res) => {
     const { id } = req.params;
     let { money } = req.body;
+    if (money == null) {
+        req.error.flash = { error: 'Please Enter Some Valid Number' };
+        return res.render(`./Posts/Show`);
+     }
     const post = await Post.findById(id);
     if (req.session && req.session.passport) {
         const user = await User.find({ username: req.session.passport.user });  
-        console.log(user);
+  
         post.user.push(user[0]);
         post.money.push(money);
-        console.log(post);
+
         await post.save();
     }
     res.redirect(`/posts/${post._id}`);
