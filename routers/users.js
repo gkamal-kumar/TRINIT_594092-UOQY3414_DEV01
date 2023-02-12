@@ -28,7 +28,7 @@ const validateusers = (req, res, next) => {
 }
 
 
-router.get('/',isLoggedin,async (req, res) => {
+router.get('/',async (req, res) => {
     const allusers = await User.find({});
     console.log(req.user)
     res.render('./Users/users', { allusers });
@@ -55,7 +55,7 @@ router.post('/register', validateusers, catchAsync(async (req, res) => {
 
 
 
-router.get('/:id',isLoggedin, async (req, res) => {
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id);
     res.render('./Users/Show', { user });
@@ -73,7 +73,7 @@ router.post('/login', passport.authenticate('local', { failureFlash: true, failu
 
 
 
-router.delete('/:id', isLoggedin,async (req, res) => {
+router.delete('/:id',async (req, res) => {
     if (!req.isAuthenticated()) {
         req.flash('error', 'you must be signed in');
         return res.redirect('/login'); r

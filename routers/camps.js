@@ -23,7 +23,7 @@ const validateCamps = (req, res, next) => {
     }
 }
 
-router.get('/',isLoggedin,async (req, res) => {
+router.get('/',async (req, res) => {
     const allcamps = await Camps.find({});
     res.render('./Camps/Camps', { allcamps });
 })
@@ -62,13 +62,16 @@ router.post('/', validateCamps, catchAsync(async (req, res) => {
     const Camp = req.body.camps;
     console.log(Camp);
     const hash = await bcrypt.hash(Camp.password, 12);
-    const ngo = new Camps({ email: Camp.email, address: Camp.address, phoneNumber: Camp.phoneNumber, description: Camp.description, name: Camp.name, password: hash })
+    const ngo = new Camps({ email: Camp.email, address: Camp.address, phoneNumber: Camp.phoneNumber, description: Camp.description, name: Camp.name, password: hash });
+    console.log(req.session);
+    req.session.name =  Camp.name ;
+    console.log(req.session);
     console.log(ngo);
     await ngo.save();
     res.redirect(`/camps/${ngo._id}`);
 }))
 
-router.get('/:id', isLoggedin,  async (req, res) => {
+router.get('/:id',   async (req, res) => {
     let { id } = req.params;
     let author=null;
     if (req.session && req.session.passport) {
@@ -80,14 +83,14 @@ router.get('/:id', isLoggedin,  async (req, res) => {
 
 
 
-router.delete('/:id', isLoggedin,async (req, res) => {
+router.delete('/:id',async (req, res) => {
     const { id } = req.params;
     await Camps.findByIdAndDelete(id);
     res.redirect('/camps')
 })
 
 
-router.post('/:id/post', isLoggedin, async (req, res) => {
+router.post('/:id/post', async (req, res) => {
     const { id } = req.params;
     const camp = await Camps.findById(id);
     const { message,title } = req.body;
@@ -101,7 +104,7 @@ router.post('/:id/post', isLoggedin, async (req, res) => {
     res.redirect(`/camps/${camp._id}`);
 })
 
-router.post('/:id/donate',isLoggedin, async(req, res) => {
+router.post('/:id/donate', async(req, res) => {
     const { id } = req.params;
     let { money } = req.body;
     if (money == null) {
@@ -111,7 +114,6 @@ router.post('/:id/donate',isLoggedin, async(req, res) => {
     const post = await Post.findById(id);
     if (req.session && req.session.passport) {
         const user = await User.find({ username: req.session.passport.user });  
-  
         post.user.push(user[0]);
         post.money.push(money);
 
